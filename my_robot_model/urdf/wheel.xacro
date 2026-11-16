@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro"><xacro:macro name="wheel" params="side x y z">
+<link name="wheel_${side}">
+  <visual><origin rpy="${pi/2} 0 0"/><geometry><cylinder radius="${wheel_diameter/2}" length="${wheel_width}"/></geometry><material name="grey"/></visual>
+  <collision><origin rpy="${pi/2} 0 0"/><geometry><cylinder radius="${wheel_diameter/2}" length="${wheel_width}"/></geometry></collision>
+</link>
+<joint name="wheel_${side}_joint" type="continuous"><parent link="base_link"/><child link="wheel_${side}"/><origin xyz="${x} ${y} ${z}"/><axis xyz="0 1 0"/></joint>
+<!-- A visible radial spoke makes rotation observable in RViz. -->
+<link name="spoke_${side}"><visual><geometry><box size="${wheel_diameter*0.8} ${wheel_width+0.002} 0.012"/></geometry><material name="orange"/></visual></link>
+<joint name="spoke_${side}_joint" type="fixed"><parent link="wheel_${side}"/><child link="spoke_${side}"/></joint>
+</xacro:macro></robot>

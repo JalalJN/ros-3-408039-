@@ -1,0 +1,7 @@
+PASS: Python syntax and XML parsing
+PASS: Xacro expansion, connected tree: 12 links, 11 joints, 4 moving joints
+PASS: expanded model matches plain URDF; introductory URDF parses
+PASS: arm box separation, analytic bound 0.049934 m; 1601 sampled elbow angles
+PASS: arm bodies above platform in 19481 joint configurations
+PASS: binary STL and RViz YAML
+NOT RUN: colcon build, ROS 2 nodes, RViz GUI, native check_urdf (ROS 2 unavailable here).

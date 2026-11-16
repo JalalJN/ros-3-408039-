@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<robot name="diff_robot_with_arm" xmlns:xacro="http://www.ros.org/wiki/xacro">
+<xacro:include filename="materials.xacro"/>
+<xacro:include filename="wheel.xacro"/>
+<xacro:include filename="arm.xacro"/>
+<xacro:property name="wheel_diameter" value="0.20"/>
+<xacro:property name="wheel_width" value="0.05"/>
+<link name="base_footprint"/>
+<link name="base_link">
+ <visual><geometry><box size="0.50 0.32 0.12"/></geometry><material name="blue"/></visual>
+ <collision><geometry><box size="0.50 0.32 0.12"/></geometry></collision>
+</link>
+<joint name="base_joint" type="fixed"><parent link="base_footprint"/><child link="base_link"/><origin xyz="0 0 0.16"/></joint>
+<link name="caster_link"><visual><geometry><sphere radius="0.04"/></geometry><material name="grey"/></visual><collision><geometry><sphere radius="0.04"/></geometry></collision></link>
+<joint name="caster_joint" type="fixed"><parent link="base_link"/><child link="caster_link"/><origin xyz="-0.20 0 -0.12"/></joint>
+<xacro:wheel side="left" x="0.10" y="0.195" z="-0.06"/>
+<xacro:wheel side="right" x="0.10" y="-0.195" z="-0.06"/>
+<xacro:two_link_arm/>
+<link name="sensor_link"><visual><geometry><mesh filename="package://my_robot_model/meshes/sensor.stl" scale="1 1 1"/></geometry><material name="red"/></visual></link>
+<joint name="sensor_joint" type="fixed"><parent link="base_link"/><child link="sensor_link"/><origin xyz="-0.17 0 0.06"/></joint>
+</robot>

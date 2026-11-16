@@ -1,0 +1,48 @@
+<?xml version="1.0"?>
+<robot name="diff_robot_with_arm">
+<material name="blue"><color rgba="0.05 0.25 0.8 1"/></material>
+<material name="grey"><color rgba="0.15 0.15 0.18 1"/></material>
+<material name="orange"><color rgba="1 0.42 0.04 1"/></material>
+<material name="red"><color rgba="0.8 0.05 0.05 1"/></material>
+<material name="white"><color rgba="0.9 0.9 0.9 1"/></material>
+<link name="base_footprint"/>
+<link name="base_link">
+ <visual><geometry><box size="0.50 0.32 0.12"/></geometry><material name="blue"/></visual>
+ <collision><geometry><box size="0.50 0.32 0.12"/></geometry></collision>
+</link>
+<joint name="base_joint" type="fixed"><parent link="base_footprint"/><child link="base_link"/><origin xyz="0 0 0.16"/></joint>
+<link name="caster_link"><visual><geometry><sphere radius="0.04"/></geometry><material name="grey"/></visual><collision><geometry><sphere radius="0.04"/></geometry></collision></link>
+<joint name="caster_joint" type="fixed"><parent link="base_link"/><child link="caster_link"/><origin xyz="-0.20 0 -0.12"/></joint>
+<link name="wheel_left">
+  <visual><origin rpy="1.5707963267948966 0 0"/><geometry><cylinder radius="0.1" length="0.05"/></geometry><material name="grey"/></visual>
+  <collision><origin rpy="1.5707963267948966 0 0"/><geometry><cylinder radius="0.1" length="0.05"/></geometry></collision>
+</link>
+<joint name="wheel_left_joint" type="continuous"><parent link="base_link"/><child link="wheel_left"/><origin xyz="0.10 0.195 -0.06"/><axis xyz="0 1 0"/></joint>
+<!-- A visible radial spoke makes rotation observable in RViz. -->
+<link name="spoke_left"><visual><geometry><box size="0.16 0.052 0.012"/></geometry><material name="orange"/></visual></link>
+<joint name="spoke_left_joint" type="fixed"><parent link="wheel_left"/><child link="spoke_left"/></joint>
+<link name="wheel_right">
+  <visual><origin rpy="1.5707963267948966 0 0"/><geometry><cylinder radius="0.1" length="0.05"/></geometry><material name="grey"/></visual>
+  <collision><origin rpy="1.5707963267948966 0 0"/><geometry><cylinder radius="0.1" length="0.05"/></geometry></collision>
+</link>
+<joint name="wheel_right_joint" type="continuous"><parent link="base_link"/><child link="wheel_right"/><origin xyz="0.10 -0.195 -0.06"/><axis xyz="0 1 0"/></joint>
+<!-- A visible radial spoke makes rotation observable in RViz. -->
+<link name="spoke_right"><visual><geometry><box size="0.16 0.052 0.012"/></geometry><material name="orange"/></visual></link>
+<joint name="spoke_right_joint" type="fixed"><parent link="wheel_right"/><child link="spoke_right"/></joint>
+<link name="arm_mount"><visual><geometry><cylinder radius="0.045" length="0.06"/></geometry><material name="grey"/></visual></link>
+<joint name="arm_mount_joint" type="fixed"><parent link="base_link"/><child link="arm_mount"/><origin xyz="0 0 0.09"/></joint>
+<link name="arm_link_1">
+ <visual><origin xyz="0 0 0.14"/><geometry><box size="0.05 0.05 0.20"/></geometry><material name="orange"/></visual>
+ <collision><origin xyz="0 0 0.14"/><geometry><box size="0.05 0.05 0.20"/></geometry></collision>
+</link>
+<joint name="shoulder_joint" type="revolute"><parent link="arm_mount"/><child link="arm_link_1"/><origin xyz="0 0 0.03"/><axis xyz="0 1 0"/><limit lower="-0.6" upper="0.6" effort="10" velocity="1"/></joint>
+<link name="arm_link_2">
+ <visual><origin xyz="0 0 0.11"/><geometry><box size="0.05 0.05 0.14"/></geometry><material name="blue"/></visual>
+ <collision><origin xyz="0 0 0.11"/><geometry><box size="0.05 0.05 0.14"/></geometry></collision>
+</link>
+<joint name="elbow_joint" type="revolute"><parent link="arm_link_1"/><child link="arm_link_2"/><origin xyz="0 0 0.28"/><axis xyz="0 1 0"/><limit lower="-0.8" upper="0.8" effort="5" velocity="1"/></joint>
+<link name="tool_link"><visual><geometry><sphere radius="0.018"/></geometry><material name="red"/></visual></link>
+<joint name="tool_joint" type="fixed"><parent link="arm_link_2"/><child link="tool_link"/><origin xyz="0 0 0.22"/></joint>
+<link name="sensor_link"><visual><geometry><mesh filename="package://my_robot_model/meshes/sensor.stl" scale="1 1 1"/></geometry><material name="red"/></visual></link>
+<joint name="sensor_joint" type="fixed"><parent link="base_link"/><child link="sensor_link"/><origin xyz="-0.17 0 0.06"/></joint>
+</robot>
